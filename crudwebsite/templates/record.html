@@ -2,9 +2,47 @@
 {% block content %}
 
 
+<div class="col-md-6 offset-md-3">
 
-<h1>Customer Record:</h1>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            {{ customer_record.first_name }} 
+            {{ customer_record.last_name }}
+        </h3>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Email: </strong>{{ customer_record.email }} 
+        </p>
+        <p class="card-text">
+            <strong>Phone: </strong>{{ customer_record.phone }} 
+        </p>
+        <p class="card-text">
+            <strong>Address: </strong>{{ customer_record.address }} 
+        </p>
+        <p class="card-text">
+            <strong>City: </strong>{{ customer_record.city }}
+        </p>
+        <p class="card-text">
+            <strong>State: </strong>{{ customer_record.state }}
+        </p>
+        <p class="card-text">
+            <strong>Zipcode: </strong>{{ customer_record.zipcode }}
+        </p>
+        <p class="card-text">
+            <strong>Created at: </strong>{{ customer_record.created_at }}
+        </p>
+        <p class="card-text">
+            <strong>ID: </strong>{{ customer_record.id }}
+        </p>
+    </div>
+</div>
+<br/>
+<a href="{% url 'home' %}" class="btn btn-dark">Back</a>
 
+<a href="{% url 'home' %}" class="btn btn-danger">Delete</a>
+</div>
 
 
 
