@@ -26,7 +26,9 @@
                 {% for record in records %}
                     <tr class="align-middle">
                         <td>
-                            {{ record.first_name }} {{ record.last_name }}
+                            <a href="{% url 'record' record.id %}">
+                                {{ record.first_name }} {{ record.last_name }}
+                            </a>
                         </td>
                         <td>{{ record.email }}</td>
                         <td>{{ record.phone }}</td>
