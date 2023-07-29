@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+import pandas as pd
+import xlrd
+import openpyxl
+from .forms import UploadFileForm
 from .forms import SignUpForm, AddRecordForm
 from .models import Record
 
@@ -108,3 +113,89 @@ def update_record(request, pk):
     else:
         messages.success(request, "You Must Be Logged In To Do That!!...")
         return redirect('home')
+
+
+
+def upload_record(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload_record.html', {'form': form})
+
+
+
+
+def handle_uploaded_file(f):
+    # Get the file extension
+    file_extension = f.name.split('.')[-1]
+
+    # Handle different file formats
+    if file_extension == 'xlsx':
+        # Read the Excel file into a DataFrame
+        df = pd.read_excel(f, engine='openpyxl')
+    elif file_extension == 'xls':
+        # Read the Excel file into a DataFrame
+        df = pd.read_excel(f, engine='xlrd')
+    elif file_extension == 'csv':
+        # Read the CSV file into a DataFrame
+        df = pd.read_csv(f)
+    else:
+        raise ValueError('Unsupported file format')
+
+    # Convert the DataFrame to a list of dictionaries
+    data = df.to_dict('records')
+
+    #print(data)
+
+    # Update the data in the database
+    update_data(data)
+
+
+
+
+def update_data(data):
+    # Define the required fields
+    required_fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'state', 'zipcode']
+
+    # Create a list to store the updated model instances
+    updated_instances = []
+
+    # Iterate over the data and update the model instances
+    for row in data:
+        # Check if all required fields are present
+        if not all(field in row for field in required_fields):
+            raise ValueError('Missing required field')
+
+        # Check if there are any extra fields
+        if len(row) > len(required_fields):
+            raise ValueError('Extra field detected', row, required_fields)
+
+        #print(row)
+        print(row.get("first_name"))
+
+        # Get the model instance using the primary key
+        instance = Record(first_name=row.get('first_name'), last_name = row.get("last_name"), 
+                        email = row.get("email"), phone = row.get("phone"), address = row.get("address"),
+                        city = row.get("city"), state = row.get("state"), zipcode = row.get("zipcode"))
+
+        instance.save()
+        # # Update the instance with the new data
+        # instance.first_name = row.get("first_name")
+        # instance.last_name = row.get("last_name")
+        # instance.email = row.get("email")
+        # instance.phone = row.get("phone")
+        # instance.address = row.get("address")
+        # instance.city = row.get("city")
+        # instance.state = row.get("state")
+        # instance.zipcode = row.get("zipcode")
+
+        # Add the updated instance to the list
+        # updated_instances.append(instance)
+        
+
+    # Use the bulk_update method to update the data in the database
+    #Record.objects.bulk_create(updated_instances, required_fields)

@@ -50,3 +50,8 @@ class AddRecordForm(forms.ModelForm):
     class Meta:
         model = Record
         exclude = ('user',)
+
+
+# create the upload form
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
