@@ -182,7 +182,7 @@ def update_data(data):
                         email = row.get("email"), phone = row.get("phone"), address = row.get("address"),
                         city = row.get("city"), state = row.get("state"), zipcode = row.get("zipcode"))
 
-        instance.save()
+        # instance.save() # it would add a single record at a time
         # # Update the instance with the new data
         # instance.first_name = row.get("first_name")
         # instance.last_name = row.get("last_name")
@@ -194,8 +194,9 @@ def update_data(data):
         # instance.zipcode = row.get("zipcode")
 
         # Add the updated instance to the list
-        # updated_instances.append(instance)
+        updated_instances.append(instance)
         
 
     # Use the bulk_update method to update the data in the database
-    #Record.objects.bulk_create(updated_instances, required_fields)
+    Record.objects.bulk_create(updated_instances) # it would add multiple record as a bulk
+    
