@@ -175,7 +175,7 @@ def update_data(data):
             raise ValueError('Extra field detected', row, required_fields)
 
         #print(row)
-        print(row.get("first_name"))
+        #print(row.get("first_name"))
 
         # Get the model instance using the primary key
         instance = Record(first_name=row.get('first_name'), last_name = row.get("last_name"), 
