@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.core.exceptions import ValidationError
 import pandas as pd
-import xlrd
-import openpyxl
 from .forms import UploadFileForm
 from .forms import SignUpForm, AddRecordForm
 from .models import Record
@@ -120,8 +118,13 @@ def upload_record(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])
-            return HttpResponseRedirect('/success/url/')
+            try:
+                handle_uploaded_file(request, request.FILES['file'])
+                messages.success(request, 'This file has been added to the table!')
+            except ValidationError as e:
+                error_message = str(e).strip('[]').replace("'", "")
+                messages.error(request, error_message)
+            return redirect('upload_record')
     else:
         form = UploadFileForm()
     return render(request, 'upload_record.html', {'form': form})
@@ -129,7 +132,7 @@ def upload_record(request):
 
 
 
-def handle_uploaded_file(f):
+def handle_uploaded_file(request, f):
     # Get the file extension
     file_extension = f.name.split('.')[-1]
 
@@ -144,7 +147,7 @@ def handle_uploaded_file(f):
         # Read the CSV file into a DataFrame
         df = pd.read_csv(f)
     else:
-        raise ValueError('Unsupported file format')
+        raise ValidationError('This format is not supported. Please use xlxs, xls, or csv format!')
 
     # Convert the DataFrame to a list of dictionaries
     data = df.to_dict('records')
@@ -152,12 +155,12 @@ def handle_uploaded_file(f):
     #print(data)
 
     # Update the data in the database
-    update_data(data)
+    update_data(request, data)
 
 
 
 
-def update_data(data):
+def update_data(request, data):
     # Define the required fields
     required_fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'state', 'zipcode']
 
@@ -168,15 +171,12 @@ def update_data(data):
     for row in data:
         # Check if all required fields are present
         if not all(field in row for field in required_fields):
-            raise ValueError('Missing required field')
+            raise ValidationError('This record does not contain all required fields. Please fix this!')
 
         # Check if there are any extra fields
         if len(row) > len(required_fields):
-            raise ValueError('Extra field detected', row, required_fields)
-
-        #print(row)
-        #print(row.get("first_name"))
-
+            raise ValidationError('This record contains extra fields. Please fix this!')
+        
         # Get the model instance using the primary key
         instance = Record(first_name=row.get('first_name'), last_name = row.get("last_name"), 
                         email = row.get("email"), phone = row.get("phone"), address = row.get("address"),
