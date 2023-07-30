@@ -25,7 +25,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "import_export",
     "crudwebsite",
+
 ]
 
 MIDDLEWARE = [
@@ -92,7 +94,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "BD"
 
 USE_I18N = True
 

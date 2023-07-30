@@ -4,12 +4,17 @@
 
 <div class="col-md-6 offset-md-3">
 
-    <h1>Upload an Excel file</h1>
+    <h3>Upload an Excel file for bulk upload.</h3>
+
+    </br>
     <form method="post" enctype="multipart/form-data">
+    
         {% csrf_token %}
         {{ form.as_p }}
+    
+    </br>
     <button type="submit">Upload</button>
-  </form>
+    </form>
 
 </div>
   
