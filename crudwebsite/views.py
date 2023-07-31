@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponse
 from django.core.exceptions import ValidationError
+from django.utils.dateparse import parse_datetime
+
 import pandas as pd
 from .forms import UploadFileForm
 from .forms import SignUpForm, AddRecordForm
@@ -10,9 +12,14 @@ from .models import Record
 
 
 # Create your views here.
+
 def home(request):
     records = Record.objects.all()
 
+    # Get the earliest and latest created_at values from the Record model
+    earliest_time = Record.objects.order_by('created_at').first().created_at
+    latest_time = Record.objects.order_by('-created_at').first().created_at
+    
     # Check to see if logging in
     if request.method == 'POST':
         username = request.POST['username']
@@ -29,7 +36,13 @@ def home(request):
             return redirect('home')
         
     else:
-        return render(request, 'home.html', {'records':records})
+        # Pass the records, earliest_time, and latest_time values to the template as context variables
+        context = {
+            'records': records,
+            'earliest_time': earliest_time,
+            'latest_time': latest_time,
+        }
+        return render(request, 'home.html', context)
 
 def logout_user(request):
     logout(request)
@@ -217,3 +230,89 @@ def export_records(request):
     df.to_excel(writer, index=False)
     writer.close()
     return response
+
+
+
+def export_records_fil(request):
+    # Get the query parameters from the URL
+    first_name = request.GET.get('first_name')
+    last_name = request.GET.get('last_name')
+    email = request.GET.get('email')
+    phone = request.GET.get('phone')
+    address = request.GET.get('address')
+    city = request.GET.get('city')
+    state = request.GET.get('state')
+    zipcode = request.GET.get('zipcode')
+    # Create a dictionary of query parameters
+    query_params = {}
+    if first_name:
+        query_params['first_name__icontains'] = first_name
+    if last_name:
+        query_params['last_name__icontains'] = last_name
+    if email:
+        query_params['email__icontains'] = email
+    if phone:
+        query_params['phone__icontains'] = phone
+    if address:
+        query_params['address__icontains'] = address
+    if city:
+        query_params['city__icontains'] = city
+    if state:
+        query_params['state__icontains'] = state
+    if zipcode:
+        query_params['zipcode__icontains'] = zipcode
+    # Get data from the Record model using the query parameters
+    records = Record.objects.filter(**query_params).values()
+    # Create a DataFrame from the records data
+    df = pd.DataFrame.from_records(records)
+    # Convert the timezone-aware created_at values to timezone-naive values
+    df['created_at'] = df['created_at'].apply(lambda x: x.replace(tzinfo=None))
+    # Create a response object for the Excel file
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=records.xlsx'
+    # Write the DataFrame to the response object as an Excel file
+    writer = pd.ExcelWriter(response, engine='openpyxl')
+    df.to_excel(writer, index=False)
+    writer.close()
+    return response
+
+
+def export_records_time(request):
+    # Get the start_date and end_date query parameters from the URL
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    # Parse the start_date and end_date strings into datetime objects
+    if start_date:
+        start_date = parse_datetime(start_date)
+    if end_date:
+        end_date = parse_datetime(end_date)
+    # Create a dictionary of query parameters
+    query_params = {}
+    if start_date:
+        query_params['created_at__gte'] = start_date
+    if end_date:
+        query_params['created_at__lte'] = end_date
+    # Get data from the Record model using the query parameters
+    records = Record.objects.filter(**query_params).values()
+    # Create a DataFrame from the records data
+    df = pd.DataFrame.from_records(records)
+    # Convert the timezone-aware created_at values to timezone-naive values
+    df['created_at'] = df['created_at'].apply(lambda x: x.replace(tzinfo=None))
+    # Create a response object for the Excel file
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=records.xlsx'
+    # Write the DataFrame to the response object as an Excel file
+    writer = pd.ExcelWriter(response, engine='openpyxl')
+    df.to_excel(writer, index=False)
+    writer.close()
+    return response
+
+
+# Get the earliest and latest created_at values from the Record model
+    earliest_time = Record.objects.order_by('created_at').first().created_at
+    latest_time = Record.objects.order_by('-created_at').first().created_at
+    # Pass the earliest_time and latest_time values to the template as context variables
+    context = {
+        'earliest_time': earliest_time,
+        'latest_time': latest_time,
+    }

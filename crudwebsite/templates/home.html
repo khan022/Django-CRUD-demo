@@ -6,7 +6,6 @@
     
     {% if user.is_authenticated %}
 
-
     <table class="table table-striped table-hover table-bordered">
         <thead>
           <tr class="table-dark">
@@ -46,6 +45,43 @@
   </table>
   
   <a href="{% url 'export_records' %}" class="btn btn-danger">Export to Excel</a>
+
+
+    <form action="{% url 'export_records_fil' %}" method="get">
+
+        {% csrf_token %} 
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name"><br><br>
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name"><br><br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone"><br><br>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address"><br><br>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city"><br><br>
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state"><br><br>
+        <label for="zipcode">Zipcode:</label>
+        <input type="text" id="zipcode" name="zipcode"><br><br>
+        <input type="submit" value="Export to Excel">
+    </form>
+
+    <form action="{% url 'export_records_time' %}" method="get">
+
+        {% csrf_token %} 
+
+        <label for="start_date">Start Date:</label>
+        <input type="datetime-local" id="start_date" name="start_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}"><br><br>
+        <label for="end_date">End Date:</label>
+        <input type="datetime-local" id="end_date" name="end_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}"><br><br>
+        <input type="submit" value="Export to Excel">
+
+    </form>
+
 
 </div>
 

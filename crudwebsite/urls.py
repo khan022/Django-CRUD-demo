@@ -12,5 +12,6 @@ urlpatterns = [
     path('update_record/<int:pk>', views.update_record, name='update_record'),
     path('upload/', views.upload_record, name='upload_record'),
     path('export/', views.export_records, name='export_records'),
-    
+    path('export_fil/', views.export_records_fil, name='export_records_fil'),
+    path('export_time/', views.export_records_time, name='export_records_time'),
 ]
