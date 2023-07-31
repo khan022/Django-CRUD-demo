@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import HttpResponse
 from django.core.exceptions import ValidationError
 import pandas as pd
 from .forms import UploadFileForm
@@ -200,3 +201,19 @@ def update_data(request, data):
     # Use the bulk_update method to update the data in the database
     Record.objects.bulk_create(updated_instances) # it would add multiple record as a bulk
     
+
+def export_records(request):
+    # Get data from the Record model
+    records = Record.objects.all().values()
+    # Create a DataFrame from the records data
+    df = pd.DataFrame.from_records(records)
+    # Convert the timezone-aware created_at values to timezone-naive values
+    df['created_at'] = df['created_at'].apply(lambda x: x.replace(tzinfo=None))
+    # Create a response object for the Excel file
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=records.xlsx'
+    # Write the DataFrame to the response object as an Excel file
+    writer = pd.ExcelWriter(response, engine='openpyxl')
+    df.to_excel(writer, index=False)
+    writer.close()
+    return response
