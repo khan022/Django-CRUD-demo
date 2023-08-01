@@ -44,43 +44,192 @@
         </tbody>
   </table>
   
-  <a href="{% url 'export_records' %}" class="btn btn-danger">Export to Excel</a>
+  <h5 style="float: right;">*This is to download all the data in excel format. &nbsp;&nbsp;<a href="{% url 'export_records' %}" class="btn btn-danger btn-sm" style="float: right;">Export to Excel</a></h5>
 
+</br>
+</br>
+</br>
+</br>
 
-    <form action="{% url 'export_records_fil' %}" method="get">
+<div class="container">
 
-        {% csrf_token %} 
+    <div class="row">
 
-        <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" name="first_name"><br><br>
-        <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" name="last_name"><br><br>
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email"><br><br>
-        <label for="phone">Phone:</label>
-        <input type="text" id="phone" name="phone"><br><br>
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address"><br><br>
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city"><br><br>
-        <label for="state">State:</label>
-        <input type="text" id="state" name="state"><br><br>
-        <label for="zipcode">Zipcode:</label>
-        <input type="text" id="zipcode" name="zipcode"><br><br>
-        <input type="submit" value="Export to Excel">
+        <div class="col-md-6">
+            <h4>Search for any of the coulmn to retrieve data in excel format.</h4>
+</br>
+
+    <form action="{% url 'export_records_fil' %}" method="get" class="form-horizontal">
+    
+    {% csrf_token %} 
+
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+        </div>
+    </div>
+</br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+        </div>
+    </div>
+</br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+        </div>
+    </div>
+</br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+        </div>
+    </div>
+</br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type of ="text" class ="form-control" id ="address" name ="address" placeholder ="Address">
+        </div>
+    </div>
+</br>
+    <div class ="form-group">
+        <div class ="col-sm-10">
+            <input type="text" class ="form-control" id ="city" name ="city" placeholder ="City">
+        </div>
+    </div>
+</br>
+    <div class ="form-group">
+        <div class ="col-sm-10">
+            <input type ="text" class ="form-control" id ="state" name ="state" placeholder ="State">
+        </div>
+    </div>
+</br>
+    <div class ="form-group">
+        <div class ="col-sm-10">
+            <input type ="text"class ="form-control"id ="zipcode"name ="zipcode" placeholder ="Zipcode"><br><br>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Export to Excel</button>
+
+    </form>
+    
+    </div>
+
+    <div class="col-md-6">
+
+        <h4>Search for any data within specific dates to download in excel format.</h4>
+</br>
+
+    <form action="{% url 'export_records_time' %}" method="get" class="form-horizontal">
+
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="start_date" class="mr-2">Start Date:</label>
+        <input type="datetime-local" id="start_date" name="start_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}" class="form-control mr-2">
+    </div>
+    
+    <div class="form-group">
+        <label for="end_date" class="mr-2">End Date:</label>
+        <input type="datetime-local" id="end_date" name="end_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}" class="form-control mr-2">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Export to Excel</button>
+
     </form>
 
-    <form action="{% url 'export_records_time' %}" method="get">
+    </div>
 
-        {% csrf_token %} 
+    </div>
 
-        <label for="start_date">Start Date:</label>
-        <input type="datetime-local" id="start_date" name="start_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}"><br><br>
-        <label for="end_date">End Date:</label>
-        <input type="datetime-local" id="end_date" name="end_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}"><br><br>
-        <input type="submit" value="Export to Excel">
+</div>
+
+<!-- <h3>Search for any of the coulmn to retrieve data in excel format.</h3>
+</br>
+
+<form action="{% url 'export_records_fil' %}" method="get" class="form-horizontal">
+    
+    {% csrf_token %} 
+
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+        </div>
+    </div>
+    </br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+        </div>
+    </div>
+</br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+        </div>
+    </div>
+</br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+        </div>
+    </div>
+</br>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type of ="text" class ="form-control" id ="address" name ="address" placeholder ="Address">
+        </div>
+    </div>
+</br>
+    <div class ="form-group">
+        <div class ="col-sm-10">
+            <input type="text" class ="form-control" id ="city" name ="city" placeholder ="City">
+        </div>
+    </div>
+</br>
+    <div class ="form-group">
+        <div class ="col-sm-10">
+            <input type ="text" class ="form-control" id ="state" name ="state" placeholder ="State">
+        </div>
+    </div>
+</br>
+    <div class ="form-group">
+        <div class ="col-sm-10">
+            <input type ="text"class ="form-control"id ="zipcode"name ="zipcode" placeholder ="Zipcode"><br><br>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Export to Excel</button>
 
     </form>
+<br/>
+<br/>
+<br/> -->
+
+<!-- <h3>Search for any data within specific dates to download in excel format.</h3>
+</br>
+
+<form action="{% url 'export_records_time' %}" method="get" class="form-horizontal">
+
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="start_date" class="mr-2">Start Date:</label>
+        <input type="datetime-local" id="start_date" name="start_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}" class="form-control mr-2">
+    </div>
+    
+    <div class="form-group">
+        <label for="end_date" class="mr-2">End Date:</label>
+        <input type="datetime-local" id="end_date" name="end_date" min="{{ earliest_time|date:'Y-m-d\TH:i' }}" max="{{ latest_time|date:'Y-m-d\TH:i' }}" class="form-control mr-2">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Export to Excel</button>
+
+</form> -->
+
+
 
 
 </div>
