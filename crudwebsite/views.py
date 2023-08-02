@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_datetime
+from django.conf import settings
 
 import pandas as pd
 from .forms import UploadFileForm

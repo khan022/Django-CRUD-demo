@@ -6,6 +6,34 @@
     
     {% if user.is_authenticated %}
 
+    <!-- <div id="countdown-timer" class="alert alert-info"></div>
+
+    <script>
+        var countdownTimer = document.getElementById('countdown-timer');
+        var timeLeft = {{ AUTO_LOGOUT_DELAY }} * 60; // Convert minutes to seconds
+    
+        function updateTimer() {
+            var minutes = Math.floor(timeLeft / 60);
+            var seconds = timeLeft % 60;
+            countdownTimer.textContent = 'Session expires in ' + minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+            timeLeft--;
+            if (timeLeft < 0) {
+                clearInterval(timerInterval);
+                countdownTimer.textContent = 'Session expired';
+                countdownTimer.classList.remove('alert-info');
+                countdownTimer.classList.add('alert-danger');
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+            }
+        }
+    
+        var timerInterval = setInterval(updateTimer, 1000);
+    </script> -->
+    
+    
+
+
     <table class="table table-striped table-hover table-bordered">
         <thead>
           <tr class="table-dark">

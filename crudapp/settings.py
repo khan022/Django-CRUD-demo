@@ -13,6 +13,7 @@ SECRET_KEY = "django-insecure--&g3oevl1f(qr&totc))9d*9di*^hf6a)$vp15b!qdtk&qf22f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = ['192.168.0.107']
 ALLOWED_HOSTS = []
 
 
@@ -25,7 +26,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "import_export",
     "crudwebsite",
 
 ]
@@ -36,9 +36,15 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "crudapp.middleware.AutoLogout",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+AUTO_LOGOUT_DELAY = 50 # in minutes
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 
 ROOT_URLCONF = "crudapp.urls"
 
@@ -53,6 +59,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "crudwebsite.context_processors.auto_logout_delay",
             ],
         },
     },
