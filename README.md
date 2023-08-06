@@ -23,25 +23,33 @@ Once the development server is running, you can access the CRM dashboard by visi
 
 ## Screenshots
 
-Include screenshots of your project here to give users a visual overview of what your project looks like and how it works.
+Here we have included screenshots for this website's different page.
 
-
+- **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
 ![Login Page](/screenshots/login_page.png)
 
+- **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
 ![Registration Page](/screenshots/register_page.png)
 
+- **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
 ![Dashboard Page](/screenshots/main_page.png)
 
+- **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
 ![Showing Single Page](/screenshots/showing_single_record.png)
 
+- **Updating Single Page**: This page allows users to update a single record in the database. Users can edit the fields of the record and save their changes.
 ![Updating Single Page](/screenshots/updating_single_record.png)
 
+- **Addition of Single Record**: This page allows users to add a new record to the database. Users can enter the details of the new record and save it to the database.
 ![Addition of Single Record](/screenshots/adding_single_record.png)
 
+- **Addition of Bulk Record with Excel**: This page allows users to add multiple records to the database at once by uploading an Excel file. Users can select an Excel file containing their data and upload it to add the records to the database.
 ![Addition of Bulk Record with Excel](/screenshots/adding_bulk_excel.png)
 
+- **Download all Records in Excel**: This page allows users to download all records from the database in an Excel file. Users can click the "Download" button to download an Excel file containing all of their data.
 ![Download all Records in Excel](/screenshots/download_all_excel.png)
 
+- **Download any Record in Excel**: This page allows users to download specific records from the database in an Excel file. Users can enter a query to search for records and download an Excel file containing the matching records.
 ![Download any Record in Excel](/screenshots/download_query_excel.png)
 
 
