@@ -1,4 +1,9 @@
 from pathlib import Path
+import socket
+# Get the current IP address
+hostname = socket.gethostname()
+ip_address = socket.gethostbyname(hostname)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,7 +18,7 @@ SECRET_KEY = "django-insecure--&g3oevl1f(qr&totc))9d*9di*^hf6a)$vp15b!qdtk&qf22f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.107', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [ip_address, '127.0.0.1', 'localhost']
 #ALLOWED_HOSTS = []
 
 
