@@ -37,3 +37,11 @@ Include screenshots of your project here to give users a visual overview of what
 ![Updating Single Page](/screenshots/updating_single_record.png)
 
 ![Addition of Single Record](/screenshots/adding_single_record.png)
+
+![Addition of Bulk Record with Excel](/screenshots/adding_bulk_excel.png)
+
+![Download all Records in Excel](/screenshots/download_all_excel.png)
+
+![Download any Record in Excel](/screenshots/download_query_excel.png)
+
+
