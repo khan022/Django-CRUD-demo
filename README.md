@@ -28,13 +28,13 @@ Here we have included screenshots for this website's different page.
 - **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
 ![Login Page](/screenshots/login_page.png)
 
-- **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
+- **Registration Page**: This is the registration page for the CRM dashboard. New users can create an account by entering their information and clicking the "Register" button.
 ![Registration Page](/screenshots/register_page.png)
 
-- **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
+- **Dashboard Page**: This is the main page of the CRM dashboard. Users can view and manage their data from this page.
 ![Dashboard Page](/screenshots/main_page.png)
 
-- **Login Page**: This is the login page for the CRM dashboard. Users can enter their username and password to log in and access the dashboard.
+- **Showing Single Page**: This page displays a single record from the database. Users can view the details of the record and perform actions such as editing or deleting the record.
 ![Showing Single Page](/screenshots/showing_single_record.png)
 
 - **Updating Single Page**: This page allows users to update a single record in the database. Users can edit the fields of the record and save their changes.
