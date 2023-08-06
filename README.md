@@ -26,5 +26,14 @@ Once the development server is running, you can access the CRM dashboard by visi
 Include screenshots of your project here to give users a visual overview of what your project looks like and how it works.
 
 
-![Login Page](screenshots/login_page.png)
+![Login Page](/screenshots/login_page.png)
 
+![Registration Page](/screenshots/register_page.png)
+
+![Dashboard Page](/screenshots/main_page.png)
+
+![Showing Single Page](/screenshots/showing_single_record.png)
+
+![Updating Single Page](/screenshots/updating_single_record.png)
+
+![Addition of Single Record](/screenshots/adding_single_record.png)
